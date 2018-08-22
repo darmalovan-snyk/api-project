@@ -1,0 +1,3 @@
+description "Core modules"
+
+apply plugin: 'java'

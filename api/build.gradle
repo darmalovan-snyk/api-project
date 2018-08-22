@@ -1,0 +1,37 @@
+description "API module"
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+applicationDefaultJvmArgs = ['--add-modules', 'java.xml.bind']
+
+mainClassName = 'com.namar.MyMain'
+
+run {
+    args = ["server", "src/main/resources/config.yml"]
+}
+
+dependencies {
+    compile(
+            project(":core"),
+
+            // dropwizard
+            "io.dropwizard:dropwizard-core:$dropwizardVersion",
+            "io.dropwizard:dropwizard-json-logging:$dropwizardVersion",
+
+            // prometheus exporter
+            "io.prometheus:simpleclient_dropwizard:$prometheusVersion",
+            "io.prometheus:simpleclient_servlet:$prometheusVersion",
+
+            // swagger documentation
+            "io.swagger.core.v3:swagger-core:$swaggerVersion",
+            "io.swagger.core.v3:swagger-jaxrs2:$swaggerVersion",
+            "io.swagger.core.v3:swagger-integration:$swaggerVersion"
+    )
+    compileOnly(
+            "org.projectlombok:lombok:$lombokVersion"
+    )
+    testCompile(
+            "com.fasterxml.jackson.jaxrs:jackson-jaxrs-xml-provider:2.7.5"
+    )
+}
